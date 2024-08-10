@@ -1,2 +1,2 @@
-+ chmod +x command.sh
+chmod +x command.sh
 npm --version
