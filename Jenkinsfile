@@ -1,22 +1,22 @@
 pipeline {
-    agent any 
+    agent any
     stages {
-        stage('Build') { 
-            steps {
-                when{
-                    expression {
-                        BRANSH_NAME == 'main'
-                    }
+        stage('Build') {
+            when {
+                expression {
+                    env.BRANCH_NAME == 'main'
                 }
-                echo "building the application" 
             }
-        }
-        stage('Test') { 
             steps {
-                echo "testing the application "
+                echo "building the application"
             }
         }
-        stage('Deploy') { 
+        stage('Test') {
+            steps {
+                echo "testing the application"
+            }
+        }
+        stage('Deploy') {
             steps {
                 echo "deploying the application"
             }
