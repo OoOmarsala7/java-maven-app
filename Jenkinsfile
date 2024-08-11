@@ -3,11 +3,11 @@ pipeline {
     stages {
         stage('Build') { 
             steps {
-                // when{
-                //     expression {
-                //         BRANSH_NAME == 'main' && CODE_CHANGES == true
-                //     }
-                // }
+                when{
+                    expression {
+                        BRANSH_NAME == 'main'
+                    }
+                }
                 echo "building the application" 
             }
         }
