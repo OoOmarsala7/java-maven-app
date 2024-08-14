@@ -31,7 +31,8 @@ pipeline {
         stage('Building container') {
             steps {
                 echo "Building the container"
-                sh "docker build -t omarsala78/my-rep:jvm:${params.VERSION} ."
+                    sh "docker build -t omarsala78/my-rep:jvm-${params.VERSION} ."
+
             }
         }
         stage('Logging and deploying to Docker Hub') {
@@ -43,7 +44,7 @@ pipeline {
                     }
                 }
                 echo "Deploying the container to Docker Hub"
-                sh "docker push omarsala78/my-rep:jvm:${params.VERSION}"
+                  sh "docker build -t omarsala78/my-rep:jvm-${params.VERSION} ."
             }
         }
     }
