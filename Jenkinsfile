@@ -5,7 +5,7 @@ pipeline {
     }
     parameters{
         choice(name: "VERSION", choices:['1.0.0', '2.0.0', '3.0.0'])
-        booleanParam(name: "ExecuteTest", DefaultValue: true)
+        booleanParam(name: "ExecuteTest", defaultValue: true)
     }
     tools {
         maven 'maven'
