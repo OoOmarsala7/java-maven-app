@@ -31,7 +31,7 @@ pipeline {
         stage('Building container') {
             steps {
                 echo "Building the container"
-                sh 'docker build -t omarsala78/my-rep:jvm .'
+                sh "docker build -t omarsala78/my-rep:jvm:${params.VERSION} ."
             }
         }
         stage('Logging and deploying to Docker Hub') {
