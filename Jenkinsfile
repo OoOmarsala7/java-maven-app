@@ -20,7 +20,7 @@ pipeline {
             }
             steps {
                 script {
-                    gv.test
+                    gv.test()
                 }
               
             }
@@ -28,7 +28,7 @@ pipeline {
         stage('Packagin') { 
             steps {
                 script {
-                    gv.pack
+                    gv.pack()
                 }
                 
             }
@@ -36,14 +36,14 @@ pipeline {
         stage('Building container') {
             steps {
                 script {
-                    gv.build_con
+                    gv.build_con()
                 }           
             }
         }
         stage('Logging and deploying to Docker Hub') {
             steps {
                 script {
-                 gv.deploy
+                 gv.deploy()
                 }
                
             }
