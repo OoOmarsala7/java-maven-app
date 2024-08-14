@@ -48,6 +48,13 @@ pipeline {
             }
         }
         stage('Logging and deploying to Docker Hub') {
+            input{
+                message "which stage are you at"
+                ok "Done"
+                parameters{
+                    choice(name: 'stage', choices: ['dev', 'test', 'prod'])
+                }         
+            }
             steps {
                 script {
                  gv.deploy()
