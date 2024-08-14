@@ -43,7 +43,7 @@ pipeline {
                     }
                 }
                 echo "Deploying the container to Docker Hub"
-                sh 'docker push omarsala78/my-rep:jvm'
+                sh "docker push omarsala78/my-rep:jvm:${param.VERSION}"
             }
         }
     }
