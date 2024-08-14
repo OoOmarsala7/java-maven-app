@@ -1,3 +1,4 @@
+def gv
 pipeline {
     agent any
     environment {
@@ -18,33 +19,33 @@ pipeline {
                 }
             }
             steps {
-                echo "Building the application ${params.VERSION}"
-                sh 'mvn test'
+                script {
+                    gv.test
+                }
+              
             }
         }
-        stage('Packagin') {  // This stage name is duplicated; consider renaming for clarity
+        stage('Packagin') { 
             steps {
-                echo "Testing the application"
-                sh 'mvn package'
+                script {
+                    gv.pack
+                }
+                
             }
         }
         stage('Building container') {
             steps {
-                echo "Building the container"
-                    sh "docker build -t omarsala78/my-rep:jvm-${params.VERSION} ."
-
+                script {
+                    gv.build_con
+                }           
             }
         }
         stage('Logging and deploying to Docker Hub') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                        echo "Logging in to Docker Hub"
-                        sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
-                    }
+                 gv.deploy
                 }
-                echo "Deploying the container to Docker Hub"
-                  sh "docker build -t omarsala78/my-rep:jvm-${params.VERSION} ."
+               
             }
         }
     }
