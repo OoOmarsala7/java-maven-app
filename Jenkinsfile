@@ -22,7 +22,7 @@ pipeline {
                 sh 'mvn test'
             }
         }
-        stage('Test') {  // This stage name is duplicated; consider renaming for clarity
+        stage('Packagin') {  // This stage name is duplicated; consider renaming for clarity
             steps {
                 echo "Testing the application"
                 sh 'mvn package'
