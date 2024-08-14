@@ -3,13 +3,22 @@ pipeline {
     environment {
         NEW_VERSION = "1.0.0"
     }
+    parameters{
+        choice(name: "VERSION", choices:['1.0.0', '2.0.0', '3.0.0'])
+        booleanParam(name: "ExecuteTest", DefaultValue: true)
+    }
     tools {
         maven 'maven'
     }
     stages {
-        stage('Build') {
+        stage('test') {
+            when{
+                expression {
+                    param.ExecuteTest == true
+                }
+            }
             steps {
-                echo "Building the application ${NEW_VERSION}"
+                echo "Building the application ${param.VERSION}"
                 sh 'mvn test'
             }
         }
