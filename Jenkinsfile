@@ -3,27 +3,26 @@ pipeline {
     environment {
         NEW_VERSION = "1.0.0"
     }
-    parameters{
-        choice(name: "VERSION", choices:['1.0.0', '2.0.0', '3.0.0'])
+    parameters {
+        choice(name: "VERSION", choices: ['1.0.0', '2.0.0', '3.0.0'])
         booleanParam(name: "ExecuteTest", defaultValue: true)
     }
     tools {
         maven 'maven'
-        
     }
     stages {
-        stage('test') {
-            when{
+        stage('Test') {
+            when {
                 expression {
-                    param.ExecuteTest == true
+                    params.ExecuteTest == true
                 }
             }
             steps {
-                echo "Building the application ${param.VERSION}"
+                echo "Building the application ${params.VERSION}"
                 sh 'mvn test'
             }
         }
-        stage('Test') {
+        stage('Test') {  // This stage name is duplicated; consider renaming for clarity
             steps {
                 echo "Testing the application"
                 sh 'mvn package'
@@ -44,7 +43,7 @@ pipeline {
                     }
                 }
                 echo "Deploying the container to Docker Hub"
-                sh "docker push omarsala78/my-rep:jvm:${param.VERSION}"
+                sh "docker push omarsala78/my-rep:jvm:${params.VERSION}"
             }
         }
     }
