@@ -2,11 +2,9 @@ pipeline {
     agent any
     environment {
         NEW_VERSION = "1.0.0"
-        withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-     }  
     }
-    tools{
-        maven
+    tools {
+        maven 'Maven'
     }
     stages {
         stage('Build') {
@@ -15,31 +13,34 @@ pipeline {
                     env.BRANCH_NAME == 'main'
                 }
             }
-            
             steps {
-                echo "building the application ${NEW_VERSION}"
-                mvn test
+                echo "Building the application ${NEW_VERSION}"
+                sh 'mvn test'
             }
         }
         stage('Test') {
             steps {
-                echo "testing the application"
-                sh mvn package
-                
+                echo "Testing the application"
+                sh 'mvn package'
             }
         }
-        stage('building container') {
+        stage('Building container') {
             steps {
-                echo "building the container"
-                sh docker build -t omarsala78/my-rep:jvm
-                
+                echo "Building the container"
+                sh 'docker build -t omarsala78/my-rep:jvm .'
             }
         }
-        stage('logging and deploying to docker hub')
-            steps{
-                echo "loggin in to docker hub"
-                sh echo $PASSWORD | docker login -u $USERNAME --password-stdin
-
+        stage('Logging and deploying to Docker Hub') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                        echo "Logging in to Docker Hub"
+                        sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
+                    }
+                }
+                echo "Deploying the container to Docker Hub"
+                sh 'docker push omarsala78/my-rep:jvm'
             }
+        }
     }
 }
