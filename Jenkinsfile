@@ -4,7 +4,7 @@ pipeline {
         NEW_VERSION = "1.0.0"
     }
     tools {
-        maven 'Maven'
+        maven 'maven'
     }
     stages {
         stage('Build') {
