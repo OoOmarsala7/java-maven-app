@@ -34,7 +34,7 @@ pipeline {
         stage('Packaging') { 
             when {
                 expression {
-                    BRANCH_NAME == 'master'  // Targeting the master branch
+                    BRANCH_NAME == 'main'  // Targeting the master branch
                 }
             }
             steps {
@@ -46,7 +46,7 @@ pipeline {
         stage('Building container') {
             when {
                 expression {
-                    BRANCH_NAME == 'master'  // Targeting the master branch
+                    BRANCH_NAME == 'main'  // Targeting the master branch
                 }
             }
             steps {
@@ -58,7 +58,7 @@ pipeline {
         stage('Logging and deploying to Docker Hub') {
             when {
                 expression {
-                    BRANCH_NAME == 'master'  // Targeting the master branch
+                    BRANCH_NAME == 'main'  // Targeting the master branch
                 }
             }
             input {
