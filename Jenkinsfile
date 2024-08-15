@@ -12,8 +12,8 @@ pipeline {
         maven 'maven'
     }
     stages {
-        stage('init'){
-            steps{
+        stage('init') {
+            steps {
                 script {
                     gv = load 'script.groovy'
                 }
@@ -29,37 +29,49 @@ pipeline {
                 script {
                     gv.test()
                 }
-              
             }
         }
-        stage('Packagin') { 
+        stage('Packaging') { 
+            when {
+                expression {
+                    BRANCH_NAME == 'master'  // Targeting the master branch
+                }
+            }
             steps {
                 script {
                     gv.pack()
                 }
-                
             }
         }
         stage('Building container') {
+            when {
+                expression {
+                    BRANCH_NAME == 'master'  // Targeting the master branch
+                }
+            }
             steps {
                 script {
                     gv.build_con()
-                }           
+                }
             }
         }
         stage('Logging and deploying to Docker Hub') {
-            input{
-                message "which stage are you at"
+            when {
+                expression {
+                    BRANCH_NAME == 'master'  // Targeting the master branch
+                }
+            }
+            input {
+                message "Which stage are you at?"
                 ok "Done"
-                parameters{
+                parameters {
                     choice(name: 'stage', choices: ['dev', 'test', 'prod'])
-                }         
+                }
             }
             steps {
                 script {
-                 gv.deploy()
+                    gv.deploy()
                 }
-               
             }
         }
     }
