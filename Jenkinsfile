@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+library("Jenkins_shared_library")
 def gv
 pipeline {
     agent any
@@ -12,13 +14,13 @@ pipeline {
         maven 'maven'
     }
     stages {
-        stage('init') {
-            steps {
-                script {
-                    gv = load 'script.groovy'
-                }
-            }
-        }
+        // stage('init') {                      //this is only if you want to load and execute from the groovy file
+        //     steps {
+        //         script {
+        //             gv = load 'script.groovy'
+        //         }
+        //     }
+        // }
         stage('Test') {
             when {
                 expression {
@@ -27,7 +29,8 @@ pipeline {
             }
             steps {
                 script {
-                    gv.test()
+                    // gv.test()
+                    test()
                 }
             }
         }
@@ -39,7 +42,8 @@ pipeline {
             }
             steps {
                 script {
-                    gv.pack()
+                    // gv.pack()
+                    building_image()
                 }
             }
         }
@@ -51,7 +55,8 @@ pipeline {
             }
             steps {
                 script {
-                    gv.build_con()
+                    // gv.build_con()
+                    build_jar("omarsala78/my-rep:jvm-5")
                 }
             }
         }
@@ -70,7 +75,8 @@ pipeline {
             }
             steps {
                 script {
-                    gv.deploy()
+                    // gv.deploy()
+                    deploy_app()
                 }
             }
         }
