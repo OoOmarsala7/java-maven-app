@@ -14,7 +14,7 @@ pipeline {
         maven 'maven'
     }
     stages {
-        // stage('init') {                      //this is only if you want to load and execute from the groovy file
+        // stage('init') {                      //this is only if you want to load and execute from the groovy filee
         //     steps {
         //         script {
         //             gv = load 'script.groovy'
