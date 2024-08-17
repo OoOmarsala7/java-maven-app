@@ -5,7 +5,7 @@ def test() {
 
 def pack() {
     echo "Packaging the application"
-    sh '''
+    sh '''#!/bin/bash
         mvn build-helper:parse-version versions:set \
         -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.nextMinorVersion}.${parsedVersion.incrementalVersion} \
         versions:commit
