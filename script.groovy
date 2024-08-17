@@ -21,8 +21,11 @@ def build_image() {
 
 def build_con() {
     echo "Building the container"
-    sh "docker build -t omarsala78/my-rep:$IMAGE_NAME ."
-}
+     sh '''
+        #!/bin/bash
+        echo "Building Docker image with tag: omarsala78/my-rep:jvm-${IMAGE_NAME}"
+        docker build -t omarsala78/my-rep:jvm-${IMAGE_NAME} .
+        '''
 
 def deploy() {
     withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
