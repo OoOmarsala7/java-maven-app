@@ -9,7 +9,7 @@ def incrementVersion() {
          -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.newIncrementalVersion} versions:commit"
     def version = readFile('pom.xml') =~ '<version>(.+)</version>'
     def matcher = version[0][1]
-    IMAGE_NAME = "$matcher-$BUILD_NUMBER"
+    env.IMAGE_NAME = "$matcher-$BUILD_NUMBER"
     
 }
 
