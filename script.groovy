@@ -5,19 +5,19 @@ def test() {
 
 def incrementVersion() {
      echo 'incrementing app version...'
-     sh "mvn build-helper:parse-version versions:set \
-         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.newIncrementalVersion} \
-          versions:commit"
+     sh '''
+         mvn build-helper:parse-version versions:set \
+         -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.nextIncrementalVersion} \
+         versions:commit
+     '''
     def version = readFile('pom.xml') =~ '<version>(.+)</version>'
     def matcher = version[0][1]
-    IMAGE_NAME = "$matcher-$BUILD_NUMBER"
-    
+    IMAGE_NAME = "${matcher}-${BUILD_NUMBER}"
 }
 
 def build_image() {
     echo "building the jar file ..."
     sh 'mvn clean package'
-
 }
 
 def build_con() {
