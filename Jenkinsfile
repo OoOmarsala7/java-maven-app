@@ -34,7 +34,7 @@ pipeline {
                 }
             }
         }
-        stage('Packaging') { 
+        stage('incrementVersion') { 
             when {
                 expression {
                     BRANCH_NAME == 'main'  // Targeting the master branch
@@ -42,7 +42,20 @@ pipeline {
             }
             steps {
                 script {
-                    gv.pack()
+                    gv.incrementVersion()
+                    // building_image() //uncomment if you use the shared library
+                }
+            }
+        }
+         stage('Packaging') { 
+            when {
+                expression {
+                    BRANCH_NAME == 'main'  // Targeting the master branch
+                }
+            }
+            steps {
+                script {
+                    gv.build_image()
                     // building_image() //uncomment if you use the shared library
                 }
             }

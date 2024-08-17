@@ -3,7 +3,7 @@ def test() {
     sh 'mvn test'
 }
 
-def pack() {
+def incrementVersion() {
      echo 'incrementing app version...'
      sh "mvn build-helper:parse-version versions:set \
          -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.newIncrementalVersion} \
@@ -12,7 +12,12 @@ def pack() {
     def matcher = version[0][1]
     IMAGE_NAME = "$matcher-$BUILD_NUMBER"
     
+}
+
+def build_image() {
+    echo "building the jar file ..."
     sh 'mvn clean package'
+
 }
 
 def build_con() {
