@@ -5,17 +5,20 @@ def test() {
 
 def pack() {
     echo "packging the application"
-    sh 'mvn package'
+    mvn build-helper:parse-version versions:set \
+  -DnewVersion=\${parsedVersion.majorVersion}.\${parsedVersion.nextMinorVersion}.\${parsedVersion.incrementalVersion} versions:commit
+    def version = readFile('pom.xml') =~ '<version>(.+)</version>'
+    def matcher = version[0][1]
+    IMAGE_NAME = "$matcher-$BUILD_NUMBER"
+    
+    sh 'mvn clean package'
 }
 
-def buildJar() {
-    echo "building the application..."
-    sh 'mvn package'
-} 
+
 
 def build_con() {
     echo "Building the container"
-    sh "docker build -t omarsala78/my-rep:jvm-${params.VERSION} ."
+    sh "docker build -t omarsala78/my-rep:jvm-${IMAGE_NAME} ."
 }
 
 def deploy() {
@@ -23,7 +26,7 @@ def deploy() {
                         echo "Logging in to Docker Hub"
                         sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
                          echo "Deploying the container to Docker Hub"
-                        sh "docker build -t omarsala78/my-rep:jvm-${params.VERSION} ."
+                        sh "docker build -t omarsala78/my-rep:jvm-${IMAGE_NAME} ."
                     }
 }
 

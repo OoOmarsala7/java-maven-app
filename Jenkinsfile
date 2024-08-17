@@ -1,5 +1,5 @@
 #!/usr/bin/env groovy
-library("Jenkins_shared_library")
+// library("Jenkins_shared_library") //uncomment if you want to use the shared library
 def gv
 pipeline {
     agent any
@@ -14,13 +14,13 @@ pipeline {
         maven 'maven'
     }
     stages {
-        // stage('init') {                      //this is only if you want to load and execute from the groovy filee
-        //     steps {
-        //         script {
-        //             gv = load 'script.groovy'
-        //         }
-        //     }
-        // }
+        stage('init') {                      //this is only if you want to load and execute from the groovy filee
+            steps {
+                script {
+                    gv = load 'script.groovy'
+                }
+            }
+        }
         stage('Test') {
             when {
                 expression {
@@ -29,8 +29,8 @@ pipeline {
             }
             steps {
                 script {
-                    // gv.test()
-                    test()
+                    gv.test()
+                    // test()    //uncomment if you use the shared library
                 }
             }
         }
@@ -42,8 +42,8 @@ pipeline {
             }
             steps {
                 script {
-                    // gv.pack()
-                    building_image()
+                    gv.pack()
+                    // building_image() //uncomment if you use the shared library
                 }
             }
         }
@@ -55,15 +55,15 @@ pipeline {
             }
             steps {
                 script {
-                    // gv.build_con()
-                    build_jar("omarsala78/my-rep:jvm-5")
+                    gv.build_con()
+                    // build_jar("omarsala78/my-rep:jvm-5") //uncomment if you use the shared library
                 }
             }
         }
         stage('Logging and deploying to Docker Hub') {
             when {
                 expression {
-                    BRANCH_NAME == 'main'  // Targeting the master branch
+                    BRANCH_NAME == 'main'  
                 }
             }
             input {
@@ -75,8 +75,8 @@ pipeline {
             }
             steps {
                 script {
-                    // gv.deploy()
-                    deploy_app()
+                    gv.deploy()
+                    // deploy_app()  //uncomment if you use the shared library
                 }
             }
         }
