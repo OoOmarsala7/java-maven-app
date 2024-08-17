@@ -7,7 +7,7 @@ pipeline {
         NEW_VERSION = "1.0.0"
     }
     parameters {
-        choice(name: "VERSION", choices: ['1.0.0', '2.0.0', '3.0.0'])
+        // choice(name: "VERSION", choices: ['1.0.0', '2.0.0', '3.0.0'])
         booleanParam(name: "ExecuteTest", defaultValue: true)
     }
     tools {
@@ -66,13 +66,13 @@ pipeline {
                     BRANCH_NAME == 'main'  
                 }
             }
-            input {
-                message "Which stage are you at?"
-                ok "Done"
-                parameters {
-                    choice(name: 'stage', choices: ['dev', 'test', 'prod'])
-                }
-            }
+            // input {
+            //     message "Which stage are you at?"
+            //     ok "Done"
+            //     parameters {
+            //         choice(name: 'stage', choices: ['dev', 'test', 'prod'])
+            //     }
+            // }
             steps {
                 script {
                     gv.deploy()
