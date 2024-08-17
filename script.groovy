@@ -21,7 +21,7 @@ def build_image() {
 
 def build_con() {
     echo "Building the container"
-    sh "docker build -t omarsala78/my-rep:${IMAGE_NAME} ."
+    sh "docker build -t omarsala78/my-rep:$IMAGE_NAME ."
 }
 
 def deploy() {
@@ -29,7 +29,7 @@ def deploy() {
         echo "Logging in to Docker Hub"
         sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
         echo "Deploying the container to Docker Hub"
-        sh "docker push omarsala78/my-rep:${IMAGE_NAME}"
+        sh "docker push omarsala78/my-rep:$IMAGE_NAME"
     }
 }
 
