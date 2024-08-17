@@ -6,8 +6,7 @@ def test() {
 def incrementVersion() {
      echo 'incrementing app version...'
      sh "mvn build-helper:parse-version versions:set \
-         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.newIncrementalVersion} \
-          versions:commit"
+         -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.minorVersion}.\\\${parsedVersion.newIncrementalVersion} versions:commit"
     def version = readFile('pom.xml') =~ '<version>(.+)</version>'
     def matcher = version[0][1]
     IMAGE_NAME = "$matcher-$BUILD_NUMBER"
@@ -16,7 +15,7 @@ def incrementVersion() {
 
 def build_image() {
     echo "building the jar file ..."
-    sh 'mvn clean package'
+        sh 'mvn clean package'
 
 }
 
