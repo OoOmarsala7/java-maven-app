@@ -5,7 +5,7 @@ def test() {
 
 def incrementVersion() {
     echo 'incrementing app version...'
-    sh "mvn build-helper:parse-version versions:set -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.nextMinorVersion}.\\\${parsedVersion.incrementalVersion} versions:commit"
+    sh "mvn build-helper:parse-version versions:set -DnewVersion=\\\${parsedVersion.majorVersion}.\\\${parsedVersion.nextMinorVersion}.\\\${parsedVersion.incrementalVersion}"
     def version = readFile('pom.xml') =~ '<version>(.+)</version>'
     def matcher = version[0][1]
     env.IMAGE_NAME = "$matcher-$BUILD_NUMBER"
@@ -41,7 +41,7 @@ def pushing_to_github() {
         sh 'git branch'
         sh 'git config --list'
         sh "git remote set-url origin https://${TOKEN}@github.com/OoOmarsala7/java-maven-app.git"
-        sh 'git push origin HEAD:main'
+        sh 'git push origin main'
     }
 }
 
