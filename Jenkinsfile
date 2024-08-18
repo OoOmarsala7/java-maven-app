@@ -1,5 +1,5 @@
 // #!/usr/bin/env groovy
-// library("Jenkins_shared_library") //uncomment if you want to use the shared library
+// library("Jenkins_shared_library") //uncomment if you want to use the shared libraryy
 def gv
 pipeline {
     agent any
