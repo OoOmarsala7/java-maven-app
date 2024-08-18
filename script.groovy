@@ -35,8 +35,9 @@ def deploy() {
 def pushing_to_github() {    
     echo "Pushing to GitHub"
     withCredentials([string(credentialsId: 'jenkins_token', variable: 'TOKEN')]) {
-        sh 'git config --global user.email "jenkins@example.com"'
-        sh 'git config --global user.name "jenkins"'
+        // sh 'git config --global user.email "jenkins@example.com"'
+        // sh 'git config --global user.name "jenkins"'
+        sh 'git pull'
         sh 'git add .'
         sh "git commit -m 'ci: jenkins automated commit'"
         
