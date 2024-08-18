@@ -32,4 +32,16 @@ def deploy() {
     }
 }
 
+def pushing_to_github(){    
+    echo "pushing to docker_hub"
+    withCredentials([usernamePassword(credentialsId: 'git_hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+    sh "git config --global user.email "jenkins@example.com" "
+    sh "git config --global user.name "jenkins" " "
+    sh "git status"
+    sh "git branch"
+    sh "git config --list"
+    sh "git remote set-url origin https://${USERNAME}:${PASSWORD}@github.com/OoOmarsala7/java-maven-app.git"
+    }
+}
+    
 return this
