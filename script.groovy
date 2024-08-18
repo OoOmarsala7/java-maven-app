@@ -20,15 +20,14 @@ def build_image() {
 
 def build_con() {
     echo "Building the container"
-    sh "docker build -t omarsala78/my-rep:slhf ."
-}
+    sh "docker build -t omarsala78/my-rep:$IMAGE_NAME ."
 
 def deploy() {
     withCredentials([usernamePassword(credentialsId: 'docker_hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
         echo "Logging in to Docker Hub"
         sh 'echo $PASSWORD | docker login -u $USERNAME --password-stdin'
         echo "Deploying the container to Docker Hub"
-        sh "docker push omarsala78/my-rep:slhf"
+        sh "docker push omarsala78/my-rep:$IMAGE_NAME"
     }
 }
 
