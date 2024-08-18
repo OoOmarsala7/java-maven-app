@@ -37,9 +37,9 @@ def pushing_to_github() {
     withCredentials([string(credentialsId: 'jenkins_token', variable: 'TOKEN')]) {
         sh 'git config --global user.email "jenkins@example.com"'
         sh 'git config --global user.name "jenkins"'
-        sh 'git status'
-        sh 'git branch'
-
+        sh 'git add .'
+        sh "git commit -m 'ci: jenkins automated commit'"
+        
         // Fetch the main branch from the remote repository
         sh 'git fetch origin main'
 
@@ -47,11 +47,10 @@ def pushing_to_github() {
         sh 'git checkout main'
 
         sh "git remote set-url origin https://${TOKEN}@github.com/OoOmarsala7/java-maven-app.git"
-        sh 'git add .'
-        sh "git commit -m 'ci:jenknis' "
         sh 'git push origin HEAD:main'
     }
 }
+
 
 
 
