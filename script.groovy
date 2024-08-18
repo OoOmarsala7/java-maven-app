@@ -39,11 +39,19 @@ def pushing_to_github() {
         sh 'git config --global user.name "jenkins"'
         sh 'git status'
         sh 'git branch'
+
+        // Fetch the main branch from the remote repository
+        sh 'git fetch origin main'
+
+        // Check out the main branch locally
+        sh 'git checkout main'
+
         sh 'git config --list'
         sh "git remote set-url origin https://${TOKEN}@github.com/OoOmarsala7/java-maven-app.git"
         sh 'git push origin main'
     }
 }
+
 
 
     
