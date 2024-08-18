@@ -46,8 +46,9 @@ def pushing_to_github() {
         // Check out the main branch locally
         sh 'git checkout main'
 
-        sh 'git config --list'
         sh "git remote set-url origin https://${TOKEN}@github.com/OoOmarsala7/java-maven-app.git"
+        sh 'git add .'
+        sh "git commit -m 'ci:jenknis' "
         sh 'git push origin main'
     }
 }
