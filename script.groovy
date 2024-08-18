@@ -1,3 +1,4 @@
+// add here 
 def test() {
     echo "Building the application ${params.VERSION}"
     sh 'mvn test'
