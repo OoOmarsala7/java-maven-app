@@ -41,7 +41,11 @@ def pushing_to_github() {
         sh 'git branch'
         sh 'git config --list'
         sh 'git remote set-url origin https://${USERNAME}:${PASSWORD}@github.com/OoOmarsala7/java-maven-app.git'
-    }
+        sh ' git add .'
+        sh ' git commit -m "Version Parsing from jenkins" '
+        sh ' git push origin HEAD:master'
+    
+    }   
 }
 
     
