@@ -56,7 +56,7 @@ def pushing_to_github() {
         
         // Stage and commit any changes
         sh 'git add .'
-        sh "git commit -m 'ci: jenkins automated commit' || echo 'No changes to commit'"
+        sh "git commit -m 'ci: jenkins automated commit'
         
         // Set the remote URL with the token and push changes
         sh "git remote set-url origin https://${TOKEN}@github.com/OoOmarsala7/java-maven-app.git"
