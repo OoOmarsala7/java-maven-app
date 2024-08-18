@@ -35,22 +35,37 @@ def deploy() {
 def pushing_to_github() {    
     echo "Pushing to GitHub"
     withCredentials([string(credentialsId: 'jenkins_token', variable: 'TOKEN')]) {
+        // Configure Git user details
         sh 'git config --global user.email "jenkins@example.com"'
         sh 'git config --global user.name "jenkins"'
-        sh 'git status'
-        sh 'git branch'
 
-        // Fetch the main branch from the remote repository
-        sh 'git fetch origin main'
-
-        // Check out the main branch locally
+        // Stash any local changes to prevent conflicts
+        sh 'git stash'
+        
+        // Fetch the latest changes from the remote repository
+        sh 'git fetch origin'
+        
+        // Check out the main branch
         sh 'git checkout main'
-
-        sh 'git config --list'
+        
+        // Merge remote changes into the local branch
+        sh 'git merge origin/main'
+        
+        // Apply stashed changes
+        sh 'git stash pop'
+        
+        // Stage and commit any changes
+        sh 'git add .'
+        sh "git commit -m 'ci: jenkins automated commit' || echo 'No changes to commit'"
+        
+        // Set the remote URL with the token and push changes
         sh "git remote set-url origin https://${TOKEN}@github.com/OoOmarsala7/java-maven-app.git"
         sh 'git push origin main'
     }
 }
+
+
+
 
 
 
