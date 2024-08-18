@@ -33,20 +33,18 @@ def deploy() {
 }
 
 def pushing_to_github() {    
-    echo "pushing to docker_hub"
-    withCredentials([usernamePassword(credentialsId: 'git_hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+    echo "Pushing to GitHub"
+    withCredentials([string(credentialsId: 'jenkins_token', variable: 'TOKEN')]) {
         sh 'git config --global user.email "jenkins@example.com"'
         sh 'git config --global user.name "jenkins"'
         sh 'git status'
         sh 'git branch'
         sh 'git config --list'
-        sh 'git remote set-url origin https://${USERNAME}:${PASSWORD}@github.com/OoOmarsala7/java-maven-app.git'
-        sh ' git add .'
-        sh ' git commit -m "Version Parsing from jenkins" '
-        sh ' git push origin HEAD:master'
-    
-    }   
+        sh "git remote set-url origin https://${TOKEN}@github.com/OoOmarsala7/java-maven-app.git"
+        sh 'git push origin HEAD:master'
+    }
 }
+
 
     
 return this
