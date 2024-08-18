@@ -49,7 +49,7 @@ def pushing_to_github() {
         sh "git remote set-url origin https://${TOKEN}@github.com/OoOmarsala7/java-maven-app.git"
         sh 'git add .'
         sh "git commit -m 'ci:jenknis' "
-        sh 'git push origin main'
+        sh 'git push origin HEAD:main'
     }
 }
 
