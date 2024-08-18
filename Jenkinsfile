@@ -47,10 +47,7 @@ pipeline {
                     // gv.incrementVersion()
                     // building_image() //uncomment if you use the shared library
                     echo 'Incrementing app version...'
-                    sh '''
-                        #!/bin/bash
-                        mvn build-helper:parse-version versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.nextMinorVersion}.${parsedVersion.incrementalVersion}
-                    '''
+                    sh 'bash -c "mvn build-helper:parse-version versions:set -DnewVersion=${parsedVersion.majorVersion}.${parsedVersion.nextMinorVersion}.${parsedVersion.incrementalVersion}"'
                     def version = readFile('pom.xml') =~ '<version>(.+)</version>'
                     def matcher = version[0][1]
                     env.IMAGE_NAME = "$matcher-$BUILD_NUMBER"
